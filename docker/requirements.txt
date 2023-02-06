@@ -4,3 +4,4 @@ SQLAlchemy==2.0.0
 PyMySQL==1.0.2
 requests==2.28.2
 lxml==4.9.2
+mitreattack-python==2.0.4
