@@ -7,6 +7,11 @@ $ cp .env.sample .env
 ```
 - .envに任意の値を入力
 
+## イメージ作成
+```
+$ docker-compose -f <docker-compose_file> build
+```
+
 ## 起動
 ```
 $ docker-compose -f <docker-compose_file> up -d
