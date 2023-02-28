@@ -1,15 +1,19 @@
+from mitreattack.stix20 import MitreAttackData
 from settings import Session
 from models.tactic import Tactic
-from lib.scrape import Scrape
 
-url = "https://attack.mitre.org/tactics/enterprise/"
-df_tactics = Scrape(url).get_table_by_df()
+def tactic():
+    mitre_attack_data = MitreAttackData("/resources/enterprise-attack.json")
+    tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
+    
+    for row in tactics:
+        record = Tactic()
+        record.id = int(row.external_references[0].external_id.split("TA")[1])
+        record.name = row.name
+        record.description = row.description
+        Session.add(record)
+    Session.commit()
+    Session.close()
 
-for row in df_tactics.itertuples():
-    record = Tactic()
-    record.ta_id = row[1]
-    record.name = row[2]
-    record.description = row[3]
-    Session.add(record)
-Session.commit()
-Session.close()
+if __name__ == "__main__":
+    tactic()

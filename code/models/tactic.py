@@ -4,7 +4,6 @@ from settings import Engine, Base, Session
 class Tactic(Base):
     __tablename__ = "tactic"
     id = Column(Integer, primary_key=True)
-    ta_id = Column(String(6), unique=True)
     name = Column(String(255))
     description = Column(Text())
 
