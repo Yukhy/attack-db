@@ -1,11 +1,16 @@
 # ATT&CK Database Creation Tools
 
-## 起動
+## ローカルでの機能
+
+
+### 起動
 ```
 $ docker-compose -f <docker-compose_file> up -d
 ```
 
-## テーブル作成
+### テーブル作成
 ```
-$ docker-compose -f <docker-compose_file> run operation python3 seeds
+$ docker-compose -f <docker-compose_file> run operation python seed.py
 ```
+
+localhostの3306番からアクセスできます。

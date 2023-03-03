@@ -1,6 +1,6 @@
 from mitreattack.stix20 import MitreAttackData
 from settings import Session
-from models.tactic import Tactic
+from models import Tactic
 
 
 mitre_attack_data = MitreAttackData("/resources/enterprise-attack.json")

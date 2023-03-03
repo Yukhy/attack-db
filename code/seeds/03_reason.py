@@ -1,7 +1,5 @@
 from settings import Session
-from models.tactic import Tactic
-from models.technique import Technique
-from models.reason import Reason
+from models import Tactic, Technique, Reason
 from mitreattack.stix20 import MitreAttackData
 
 mitre_attack_data = MitreAttackData("/resources/enterprise-attack.json")

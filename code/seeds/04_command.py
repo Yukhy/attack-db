@@ -1,9 +1,8 @@
-from settings import Session
-from models.technique import Technique
-from models.command import Command
 import pandas as pd
 import ruamel.yaml
 import glob
+from settings import Session
+from models import Technique, Command
 
 def get_commands_by_df(file: str):
     yaml = ruamel.yaml.YAML()
