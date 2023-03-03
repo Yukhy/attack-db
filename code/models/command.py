@@ -6,6 +6,6 @@ class Command(Base):
     id = Column(Integer, primary_key=True)
     command = Column(Text())
     technique_id = Column(ForeignKey('technique.id',onupdate='CASCADE', ondelete='CASCADE'))
-    subtechnique_id = Column(ForeignKey('subtechnique.id',onupdate='CASCADE', ondelete='CASCADE'))
+    
     def __init__(self):
         Command.metadata.create_all(bind=Engine)

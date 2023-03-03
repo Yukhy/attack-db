@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey
 from settings import Engine, Base
 
 # TacticsとTechniquesの中間テーブル
