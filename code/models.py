@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey
 from settings import Engine, Base, Session
 
 class Tactic(Base):
-    __tablename__ = "tactic"
+    __tablename__ = "tactics"
     id = Column(Integer, primary_key=True)
     external_id = Column(String(6), unique=True, nullable=False)
     name = Column(String(255))
@@ -18,7 +18,7 @@ class Tactic(Base):
         return Session.query(Tactic).filter(Tactic.name == name).first().id
 
 class Technique(Base):
-    __tablename__ = "technique"
+    __tablename__ = "techniques"
     id = Column(Integer, primary_key=True)
     external_id = Column(String(9), unique=True, nullable=False)
     name = Column(String(255))
@@ -38,7 +38,7 @@ class Technique(Base):
         return Session.query(Technique).filter(Technique.external_id == external_id).first().id
 
 class Command(Base):
-    __tablename__ = "command"
+    __tablename__ = "commands"
     id = Column(Integer, primary_key=True)
     command = Column(Text())
     technique_id = Column(ForeignKey('technique.id',onupdate='CASCADE', ondelete='CASCADE'))
@@ -51,7 +51,7 @@ class Command(Base):
 
 # TacticsとTechniquesの中間テーブル
 class Reason(Base):
-    __tablename__ = "reason"
+    __tablename__ = "reasons"
     id = Column(Integer, primary_key=True)
     tactic_id = Column(ForeignKey('tactic.id',onupdate='CASCADE', ondelete='CASCADE'))
     technique_id = Column(ForeignKey('technique.id',onupdate='CASCADE', ondelete='CASCADE'))
