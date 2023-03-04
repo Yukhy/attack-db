@@ -15,7 +15,6 @@ $ cp .env.sample .env
 ```
 $ docker compose -f docker-compose.local.yaml up -d
 ```
-
 ### テーブル作成
 ```
 $ docker compose -f docker-compose.local.yaml run operation python seed.py
