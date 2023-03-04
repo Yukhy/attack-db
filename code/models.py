@@ -11,6 +11,9 @@ class Tactic(Base):
     def __init__(self):
         Tactic.metadata.create_all(bind=Engine)
     
+    def num_of_row():
+        return Session.query(Tactic).count()
+    
     def get_id_by_name(name :str):
         return Session.query(Tactic).filter(Tactic.name == name).first().id
 
@@ -24,6 +27,9 @@ class Technique(Base):
 
     def __init__(self):
         Technique.metadata.create_all(bind=Engine)
+    
+    def num_of_row():
+        return Session.query(Technique).count()
 
     def get_id_by_name(name :str):
         return Session.query(Technique).filter(Technique.name == name).first().id
@@ -40,6 +46,9 @@ class Command(Base):
     def __init__(self):
         Command.metadata.create_all(bind=Engine)
 
+    def num_of_row():
+        return Session.query(Command).count()
+
 # TacticsとTechniquesの中間テーブル
 class Reason(Base):
     __tablename__ = "reason"
@@ -49,3 +58,6 @@ class Reason(Base):
 
     def __init__(self):
         Reason.metadata.create_all(bind=Engine)
+    
+    def num_of_row():
+        return Session.query(Reason).count()

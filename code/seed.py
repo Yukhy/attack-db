@@ -1,4 +1,4 @@
-import os, sys
+import os
 
 extension = ".py"
 
@@ -9,7 +9,6 @@ py_files = [file for file in files if file.endswith(extension)]
 py_files.sort()
 
 for file in py_files:
-    print("(in process)", file)
+    print("(process)", file)
     file_path = os.path.join(folder_path, file)
     os.system("python {}".format(file_path))
-    print("(done)", file)
