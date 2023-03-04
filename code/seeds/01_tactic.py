@@ -1,15 +1,21 @@
+from mitreattack.stix20 import MitreAttackData
 from settings import Session
-from models.tactic import Tactic
-from lib.scrape import Scrape
+from models import Tactic
+from sqlalchemy import exc
 
-url = "https://attack.mitre.org/tactics/enterprise/"
-df_tactics = Scrape(url).get_table_by_df()
+try:
+    Tactic.num_of_row()
+    print("Tactic table already exists.")
+except exc.SQLAlchemyError:
+    mitre_attack_data = MitreAttackData("/resources/enterprise-attack.json")
+    tactics = mitre_attack_data.get_tactics(remove_revoked_deprecated=True)
 
-for row in df_tactics.itertuples():
-    record = Tactic()
-    record.ta_id = row[1]
-    record.name = row[2]
-    record.description = row[3]
-    Session.add(record)
-Session.commit()
-Session.close()
+    for row in tactics:
+        record = Tactic()
+        record.external_id = row.external_references[0].external_id
+        record.name = row.name
+        record.description = row.description
+        Session.add(record)
+    Session.commit()
+    Session.close()
+    print("Tactic table created.")

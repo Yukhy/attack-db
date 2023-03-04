@@ -1,18 +1,25 @@
+from mitreattack.stix20 import MitreAttackData
 from settings import Session
-from models.technique import Technique
-from lib.scrape import Scrape
+from models import Technique
+from sqlalchemy import exc
 
-url = "https://attack.mitre.org/techniques/enterprise/"
-df_techniques = Scrape(url).get_table_by_df()
-df_parent_techniques = df_techniques[df_techniques["ID.1"].str.startswith("T")]
-df_parent_techniques = df_parent_techniques.drop("ID.1", axis=1)
+try:
+    Technique.num_of_row()
+    print("Technique table already exists.")
+except exc.SQLAlchemyError:
+    mitre_attack_data = MitreAttackData("/resources/enterprise-attack.json")
+    techniques = mitre_attack_data.get_techniques(remove_revoked_deprecated=True)
 
-create_table = Technique()
-for row in df_parent_techniques.itertuples():
-    record = Technique()
-    record.t_id = row[1]
-    record.name = row[2]
-    record.description = row[3]
-    Session.add(record)
-Session.commit()
-Session.close()
+    for row in techniques:
+        record = Technique()
+        record.external_id = row.external_references[0].external_id
+        if "." in record.external_id:
+            record.is_subtechnique = True
+        else:
+            record.is_subtechnique = False
+        record.name = row.name
+        record.description = row.description
+        Session.add(record)
+    Session.commit()
+    Session.close()
+    print("Technique table created.")
