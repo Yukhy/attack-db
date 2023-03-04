@@ -8,8 +8,6 @@ services:
     volumes:
       - ./code:/code
       - ./resources:/resources
-    ports:
-      - "8888:8888"
     environment:
       PYTHONPATH: /code
     env_file:
@@ -17,10 +15,8 @@ services:
   mariadb:
     image: mariadb:10.9.4
     container_name: mariadb
+    tty: true
     ports:
       - "3306:3306"
-    environment:
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_DATABASE: attack
     env_file:
       - .env
