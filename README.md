@@ -26,3 +26,11 @@ $ docker compose -f docker-compose.local.yaml run operation python seed.py
 // ホストからのアクセスする場合 (別途MySQLクライアントのインストールが必要)
 $ mysql -h localhost -P 3306 --protocol=tcp -u <username> -p
 ```
+
+## ローカルでの起動（Windows）
+- .env.sampleから.envを作成する。
+```
+copy .env.sample .env
+```
+
+起動はおそらくLinux等々と同じ
