@@ -41,7 +41,7 @@ class Command(Base):
     __tablename__ = "commands"
     id = Column(Integer, primary_key=True)
     command = Column(Text())
-    technique_id = Column(ForeignKey('technique.id',onupdate='CASCADE', ondelete='CASCADE'))
+    technique_id = Column(ForeignKey('techniques.id',onupdate='CASCADE', ondelete='CASCADE'))
     
     def __init__(self):
         Command.metadata.create_all(bind=Engine)
@@ -53,8 +53,8 @@ class Command(Base):
 class Reason(Base):
     __tablename__ = "reasons"
     id = Column(Integer, primary_key=True)
-    tactic_id = Column(ForeignKey('tactic.id',onupdate='CASCADE', ondelete='CASCADE'))
-    technique_id = Column(ForeignKey('technique.id',onupdate='CASCADE', ondelete='CASCADE'))
+    tactic_id = Column(ForeignKey('tactics.id',onupdate='CASCADE', ondelete='CASCADE'))
+    technique_id = Column(ForeignKey('techniques.id',onupdate='CASCADE', ondelete='CASCADE'))
 
     def __init__(self):
         Reason.metadata.create_all(bind=Engine)

@@ -19,26 +19,22 @@ def get_commands_by_df(file: str):
     df_commands = pd.DataFrame(commands, columns=["Commands"])
     return df_commands
 
-try:
-    Command.num_of_row()
-    print("Command table already exists.")
-except exc.SQLAlchemyError:
-    # atomicのDFを生成
-    file_lst = glob.glob("/resources/atomics/*")
-    df_atomics = pd.DataFrame(columns=["Commands", "technique_external_id"])
-    for file in file_lst:
-        technique_external_id = file.split(".yaml")[0].split("atomics/")[1]
-        df_tmp = get_commands_by_df(file)
-        df_tmp["technique_external_id"] = technique_external_id
-        df_atomics = pd.concat([df_atomics, df_tmp], axis=0)
-    df_atomics = df_atomics.sort_values("technique_external_id")
+# atomicのDFを生成
+file_lst = glob.glob("/resources/atomics/*")
+df_atomics = pd.DataFrame(columns=["Commands", "technique_external_id"])
+for file in file_lst:
+    technique_external_id = file.split(".yaml")[0].split("atomics/")[1]
+    df_tmp = get_commands_by_df(file)
+    df_tmp["technique_external_id"] = technique_external_id
+    df_atomics = pd.concat([df_atomics, df_tmp], axis=0)
+df_atomics = df_atomics.sort_values("technique_external_id")
 
-    for row in df_atomics.itertuples():
-        record = Command()
-        record.command = row[1]
-        record.technique_id = Technique.get_id_by_external_id(row[2])
-        Session.add(record)
-        
-    Session.commit()
-    Session.close()
-    print("Command table created.")
+for row in df_atomics.itertuples():
+    record = Command()
+    record.command = row[1]
+    record.technique_id = Technique.get_id_by_external_id(row[2])
+    Session.add(record)
+    
+Session.commit()
+Session.close()
+print("Command table created.")
