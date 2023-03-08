@@ -23,8 +23,12 @@ $ docker compose -f docker-compose.local.yaml run operation python seed.py
 ### データベースへのアクセス
 - localhostの3306番からアクセスする。
 ```
-// ホストからのアクセスする場合 (別途MySQLクライアントのインストールが必要)
+// ホストからのアクセス (別途MySQLクライアントのインストールが必要)
 $ mysql -h localhost -P 3306 --protocol=tcp -u <username> -p
+// mariadbコンテナからのアクセス
+$ docker compose -f docker-compose.local.yaml exec -it mariadb bash
+
+$ mysql -u <username> -p
 ```
 
 ## ローカルでの起動（Windows）
@@ -32,5 +36,11 @@ $ mysql -h localhost -P 3306 --protocol=tcp -u <username> -p
 ```
 copy .env.sample .env
 ```
+- .envに任意の値を入力する。
+起動はおそらくLinux等々と同じ。
 
-起動はおそらくLinux等々と同じ
+## phpMyAdminからデータベースを閲覧
+```
+localhost:3333
+```
+にアクセスする。
