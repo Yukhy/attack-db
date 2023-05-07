@@ -1,11 +1,14 @@
-# ATT&CK Database Creation Tools
+# ATT&CK Database
 
-## 要件 (検証済み環境)
+## Overview
+MITRE ATT&CK v11のTactics、Techniques並びに、Atomic Red Teamの攻撃コマンドを集約したMaria DBで構築されていたデータベースです。
+
+## Requirements
 - Docker 20.10.22
-- Docker Compose 2.15.1
 
-## ローカルでの起動 (Linux, Mac 0S)
-- .env.sampleから.envを作成する。
+## Usage in Local (Linux, Mac 0S)
+
+### .env.sampleから.envを作成
 ```
 $ cp .env.sample .env
 ```
@@ -31,16 +34,51 @@ $ docker compose -f docker-compose.local.yaml exec -it mariadb bash
 $ mysql -u <username> -p
 ```
 
-## ローカルでの起動（Windows）
-- .env.sampleから.envを作成する。
+## Usage in Local（Windows）
+### .env.sampleから.envを作成
 ```
 copy .env.sample .env
 ```
-- .envに任意の値を入力する。
-起動はおそらくLinux等々と同じ。
+
+###　起動は上記と同様
 
 ## phpMyAdminからデータベースを閲覧
 ```
 localhost:3333
 ```
 にアクセスする。
+
+## Table Description
+
+###　ER図
+```mermaid
+erDiagram
+    tactics {
+        int id
+        string external_id
+        string name
+        text description
+    }
+    techniques {
+        int id
+        string external_id
+        string name
+        text description
+        boolean is_subtechnique
+    }
+    reasons {
+        int id
+        int tactic_id
+        int technique_id
+    }
+    commands {
+        int id
+        text command
+        int technique_id
+    }
+
+    tactics ||--|{ reasons
+    techniques ||--|{ reasons
+    techniques ||--o{ commands
+
+```
